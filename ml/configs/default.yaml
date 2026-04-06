@@ -1,0 +1,59 @@
+seed: 42
+
+data:
+  datasets: ["nhoyh", "microchip"]    # start with these two; add "edgefall", "ur_fall" later
+  target_rate_hz: 50
+  window_sec: 60
+  stride_sec: 30                       # 50% overlap for training; test uses window_sec
+  val_fraction: 0.15
+  test_fraction: 0.15
+  split_strategy: "subject"            # "subject" or "random"
+  normalize: "zscore"                  # "zscore" or "per_window"
+  augmentation:
+    enabled: true
+    noise_std_accel: 0.01              # gaussian noise sigma in g's
+    noise_std_gyro: 1.0                # gaussian noise sigma in deg/s
+    scale_range: [0.9, 1.1]
+    time_warp_max: 0.1                 # max stretch/compress ratio
+
+model:
+  name: "cnn1d"                        # "baseline", "cnn1d", "lstm", "transformer"
+  cnn1d:
+    channels: [32, 64, 128, 128]
+    kernel_sizes: [7, 5, 5, 3]
+    dropout: 0.3
+  lstm:
+    hidden_size: 128
+    num_layers: 2
+    bidirectional: true
+    dropout: 0.2
+    downsample_factor: 5
+  transformer:
+    d_model: 64
+    nhead: 4
+    num_layers: 3
+    patch_size: 50
+    patch_stride: 25
+    dropout: 0.1
+
+training:
+  epochs: 100
+  batch_size: 32
+  lr: 0.001
+  weight_decay: 0.0001
+  optimizer: "adamw"
+  scheduler: "cosine"
+  loss: "bce"                          # "bce" or "focal"
+  focal_gamma: 2.0
+  patience: 15                         # early stopping patience (epochs)
+  pos_weight_auto: true                # auto-compute from class distribution
+
+evaluation:
+  target_tpr: 0.95
+  max_fpr: 0.10
+  threshold_sweep_steps: 100
+
+output:
+  dir: "outputs"
+  save_best: true
+  save_last: true
