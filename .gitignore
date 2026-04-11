@@ -10,6 +10,10 @@ build/
 ml/data/
 ml/outputs/
 
+# Notebook local-run artifacts
+ml/notebooks/data/
+ml/notebooks/*.pt
+
 # Jupyter
 .ipynb_checkpoints/
 
