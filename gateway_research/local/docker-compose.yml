@@ -1,0 +1,28 @@
+version: '3'
+
+services:
+  fallyx-gateway:
+    image: fallyx-gateway:latest  # You'll need to update this tag to match your loaded image
+    container_name: fallyx-gateway
+    privileged: true  # Required for systemd
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro  # For systemd support
+      - /tmp:/tmp  # Temporary files
+    tmpfs:
+      - /run
+      - /run/lock
+    ports:
+      - "22:22"    # SSH
+      - "80:80"    # HTTP
+      - "443:443"  # HTTPS
+      - "1883:1883"  # MQTT
+      - "8080:8080"  # Custom web interface
+    restart: unless-stopped
+    environment:
+      - PYTHONUNBUFFERED=1  # Ensure Python output is not buffered
+    command: ["/sbin/init"]  # Start systemd
+    # The following settings help with systemd in Docker
+    cap_add:
+      - SYS_ADMIN
+    security_opt:
+      - seccomp:unconfined

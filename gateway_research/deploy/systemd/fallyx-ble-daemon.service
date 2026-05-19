@@ -1,0 +1,25 @@
+[Unit]
+Description=Fallyx C BLE Daemon
+# CRITICAL: These directives enforce the startup order.
+# This service will only start after fallyx-gateway.service is active.
+After=fallyx-gateway.service
+Requires=fallyx-gateway.service
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/opt/fallyx-gateway/gateway/ble-daemon
+ExecStart=/usr/local/bin/fallyx_daemon
+
+# Automatically restart the service if it fails, but less aggressively
+Restart=on-failure
+RestartSec=10
+StartLimitBurst=3
+StartLimitIntervalSec=60
+
+# Route all logs to the systemd journal.
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target

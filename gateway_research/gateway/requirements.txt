@@ -1,0 +1,26 @@
+# Fallyx Gateway Requirements
+
+# Data Processing
+numpy>=1.22.0  # For audio data processing
+scipy>=1.8.0  # For audio file operations
+
+# Network Communication
+paho-mqtt>=1.6.1  # For MQTT communication
+requests>=2.27.1  # For HTTP communication
+
+# System Management
+psutil>=5.9.0  # For system monitoring
+
+# Audio Processing
+sounddevice>=0.4.4  # For audio recording and playbook
+openai>=1.0.0  # For audio transcription and intent classification
+
+# Voice Assistant
+pvporcupine>=3.0.0  # For wake word detection
+
+# Logging and Configuration
+python-dotenv>=0.19.0  # For loading environment variables from .env files
+
+# Testing (if needed for development)
+# pytest>=7.0.0  # For unit testing
+# pytest-asyncio>=0.21.0  # For testing async code

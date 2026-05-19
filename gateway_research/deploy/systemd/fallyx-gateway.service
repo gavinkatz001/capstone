@@ -1,0 +1,26 @@
+[Unit]
+Description=Fallyx Python Gateway Service
+# Ensures networking is up before this service starts.
+After=network.target
+
+[Service]
+Type=simple
+User=root
+# The installation script should place the gateway code in /opt/fallyx-gateway.
+# The .env file must be present in this directory.
+WorkingDirectory=/opt/fallyx-gateway
+
+# Executes the Python application as a module.
+ExecStart=/usr/bin/python3 -m gateway.main
+
+# Automatically restart the service if it fails.
+Restart=always
+RestartSec=10
+
+# Route all logs to the systemd journal.
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+# Ensures the service is started on boot.
+WantedBy=multi-user.target

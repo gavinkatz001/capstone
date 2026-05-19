@@ -1,0 +1,14 @@
+version: '3'
+
+services:
+  fallyx-gateway:
+    build:
+      context: ../..
+      dockerfile: local/local-build/Dockerfile
+    container_name: fallyx-gateway-local
+    ports:
+      - "1883:1883"  # MQTT
+      - "8080:8080"  # Custom web interface
+    restart: unless-stopped
+    environment:
+      - PYTHONUNBUFFERED=1  # Ensure Python output is not buffered
