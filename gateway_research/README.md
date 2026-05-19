@@ -98,4 +98,6 @@ For more detailed instructions on using the Docker image, see the [Image Buildin
 4. Flash the image to an SD card and insert it into the Orange Pi Zero 2 W
 5. Power on the device and it will automatically start the gateway firmware
 
+testing
+
 
